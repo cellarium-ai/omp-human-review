@@ -5,8 +5,8 @@ Code review tooling for [Oh My Pi](https://ohmy.pi) agent runs — a three-part 
 | Part | Directory | Language | Distributed via |
 |---|---|---|---|
 | OMP extension | `omp/` | TypeScript | `omp plugin link` (see below) |
-| IntelliJ plugin | `intellij/` | Kotlin | local `.zip` install |
-| VSCode extension | `vscode/` | TypeScript | local `.vsix` install |
+| IntelliJ plugin | `intellij/` | Kotlin | `distributions/intellij-omp-human-review-0.1.0.zip` |
+| VSCode extension | `vscode/` | TypeScript | `distributions/vscode-omp-human-review-0.1.0.vsix` |
 
 All three sides speak the same contract: **`.omp-review/review.md`** in your project root —
 a small markdown file with YAML-style frontmatter.
@@ -30,11 +30,14 @@ same `.omp-review/review.md` contract — use whichever IDE you're already in.
 
 ### IDE plugins
 
-**IntelliJ (PyCharm / IDEA / etc.)** — run `./gradlew buildPlugin` inside `intellij/`, then go to
-*Settings → Plugins → ⚙ → Install Plugin from Disk…* and select the `.zip` under `intellij/build/distributions/`.
+**IntelliJ (PyCharm / IDEA / etc.)** — go to *Settings → Plugins → ⚙ → Install Plugin from Disk…*
+and select `distributions/intellij-omp-human-review-0.1.0.zip`.
 
-**VS Code** — run `npm install && npm run package` inside `vscode/`, then run
-`code --install-extension omp-review-vscode-*.vsix` or use *Extensions → … → Install from VSIX…*.
+**VS Code** — run:
+```bash
+code --install-extension distributions/vscode-omp-human-review-0.1.0.vsix
+```
+or use *Extensions → … → Install from VSIX…* and pick the same file.
 
 ### OMP extension
 
