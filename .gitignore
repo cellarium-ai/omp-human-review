@@ -1,0 +1,22 @@
+# OMP Review session data — developer-local, never committed
+.omp-review/
+
+# IntelliJ plugin build outputs
+intellij/.gradle/
+intellij/build/
+intellij/.intellijPlatform/
+intellij/.kotlin/
+
+# OMP extension
+omp/node_modules/
+omp/dist/
+omp/package-lock.json
+
+# VSCode extension
+vscode/node_modules/
+vscode/dist/
+vscode/out/
+vscode/*.vsix
+
+# macOS
+.DS_Store
