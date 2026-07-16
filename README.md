@@ -5,8 +5,8 @@ Code review tooling for [Oh My Pi](https://ohmy.pi) agent runs — a three-part 
 | Part | Directory | Language | Distributed via |
 |---|---|---|---|
 | OMP extension | `omp/` | TypeScript | `omp plugin link` (see below) |
-| IntelliJ plugin | `intellij/` | Kotlin | JetBrains Marketplace |
-| VSCode extension | `vscode/` | TypeScript | VS Code Marketplace / `.vsix` install |
+| IntelliJ plugin | `intellij/` | Kotlin | local `.zip` install |
+| VSCode extension | `vscode/` | TypeScript | local `.vsix` install |
 
 All three sides speak the same contract: **`.omp-review/review.md`** in your project root —
 a small markdown file with YAML-style frontmatter.
@@ -26,12 +26,20 @@ You click Refresh in the Human Review panel (IntelliJ) or run the Refresh comman
 The IntelliJ plugin and VSCode extension are independent, interchangeable front-ends to the
 same `.omp-review/review.md` contract — use whichever IDE you're already in.
 
-## Setup
+## Installation
+
+### IDE plugins
+
+**IntelliJ (PyCharm / IDEA / etc.)** — run `./gradlew buildPlugin` inside `intellij/`, then go to
+*Settings → Plugins → ⚙ → Install Plugin from Disk…* and select the `.zip` under `intellij/build/distributions/`.
+
+**VS Code** — run `npm install && npm run package` inside `vscode/`, then run
+`code --install-extension omp-review-vscode-*.vsix` or use *Extensions → … → Install from VSIX…*.
 
 ### OMP extension
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/cellarium-ai/omp-human-review/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/cellarium-ai/omp-human-review/main/omp/install.sh | bash
 ```
 
 Or manually:
@@ -42,28 +50,7 @@ omp plugin link ~/.omp-review/omp
 ```
 
 Restart OMP. The extension activates automatically on the next agent run.
-
 To update later: re-run the script, or `git -C ~/.omp-review pull`.
-
-### IntelliJ plugin
-
-```bash
-cd intellij
-./gradlew runIde          # launches a sandbox PyCharm with the plugin loaded
-./gradlew buildPlugin     # produces a .zip for manual installation
-```
-
-### VSCode extension
-
-```bash
-cd vscode
-npm install
-```
-Then press F5 to launch the Extension Development Host, or build an installable package:
-```bash
-npm run package                              # produces omp-review-vscode-<version>.vsix
-code --install-extension omp-review-vscode-*.vsix
-```
 
 ## Development
 
