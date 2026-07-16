@@ -4,7 +4,7 @@ Code review tooling for [Oh My Pi](https://ohmy.pi) agent runs — a three-part 
 
 | Part | Directory | Language | Distributed via |
 |---|---|---|---|
-| OMP extension | `omp/` | TypeScript | OMP marketplace / `.omp/extensions/` |
+| OMP extension | `omp/` | TypeScript | `omp plugin link` (see below) |
 | IntelliJ plugin | `intellij/` | Kotlin | JetBrains Marketplace |
 | VSCode extension | `vscode/` | TypeScript | VS Code Marketplace / `.vsix` install |
 
@@ -30,11 +30,20 @@ same `.omp-review/review.md` contract — use whichever IDE you're already in.
 
 ### OMP extension
 
-Copy or symlink `omp/` into your project's `.omp/extensions/`:
+```bash
+curl -fsSL https://raw.githubusercontent.com/cellarium-ai/omp-human-review/main/install.sh | bash
+```
+
+Or manually:
 
 ```bash
-ln -s /path/to/omp-review/omp .omp/extensions/omp-review
+git clone https://github.com/cellarium-ai/omp-human-review.git ~/.omp-review
+omp plugin link ~/.omp-review/omp
 ```
+
+Restart OMP. The extension activates automatically on the next agent run.
+
+To update later: re-run the script, or `git -C ~/.omp-review pull`.
 
 ### IntelliJ plugin
 
