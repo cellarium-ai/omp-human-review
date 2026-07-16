@@ -1,0 +1,38 @@
+<idea-plugin>
+    <id>io.github.ompreview</id>
+    <name>Human Review</name>
+    <vendor>omp-review</vendor>
+    <description><![CDATA[
+        <p><b>Human Review</b> provides a code-review panel for Oh My Pi agent runs.</p>
+        <p>After OMP modifies files, open the Human Review panel and click Refresh to diff against HEAD.
+        Annotate lines with review comments, then Submit — they are written to
+        <code>.omp-review/review.md</code> and delivered to the next OMP run.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <resource-bundle>messages.OmpReviewBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow
+            factoryClass="io.github.ompreview.toolWindow.OmpReviewToolWindowFactory"
+            id="Human Review"
+            anchor="right"
+        />
+        <postStartupActivity
+            implementation="io.github.ompreview.startup.OmpReviewStartupActivity"
+        />
+        <projectService
+            serviceImplementation="io.github.ompreview.services.OmpReviewProjectService"
+        />
+        <projectService
+            serviceImplementation="io.github.ompreview.settings.OmpReviewSettings"
+        />
+        <projectConfigurable
+            instance="io.github.ompreview.settings.OmpReviewSettingsConfigurable"
+            displayName="Human Review"
+            id="io.github.ompreview.settings.OmpReviewSettingsConfigurable"
+            parentId="tools"
+        />
+    </extensions>
+</idea-plugin>

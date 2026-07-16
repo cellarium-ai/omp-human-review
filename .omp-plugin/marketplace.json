@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "omp-review",
+  "owner": {
+    "name": "cellarium-ai"
+  },
+  "plugins": [
+    {
+      "name": "omp-review",
+      "description": "Human-in-the-loop code review bridge for OMP runs: annotate changed lines in the IDE, inject comments into the next agent turn.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/cellarium-ai/omp-human-review.git",
+        "path": "omp",
+        "ref": "main"
+      },
+      "category": "development",
+      "homepage": "https://github.com/cellarium-ai/omp-human-review"
+    }
+  ]
+}

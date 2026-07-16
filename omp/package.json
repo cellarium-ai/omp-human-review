@@ -1,0 +1,19 @@
+{
+  "name": "omp-review-extension",
+  "version": "0.1.0",
+  "description": "OMP extension that injects human review comments from .omp-review/review.md into the next agent run.",
+  "type": "module",
+  "main": "src/index.ts",
+  "omp": {
+    "extensions": ["./src/index.ts"]
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  },
+  "peerDependencies": {
+    "@oh-my-pi/pi-coding-agent": "*"
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "name": "omp-review-vscode",
+  "displayName": "Human Review",
+  "description": "Human-in-the-loop code review bridge for Oh My Pi agent runs: diff changed files against HEAD, annotate lines, submit to the next OMP run.",
+  "version": "0.1.0",
+  "publisher": "omp-review",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ompReview",
+          "title": "Human Review",
+          "icon": "resources/human-review-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "ompReview": [
+        {
+          "id": "ompReviewFiles",
+          "name": "Changed Files"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "ompReviewFiles",
+        "contents": "No files to review.\n[Refresh](command:ompReview.refresh)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "ompReview.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)",
+        "category": "Human Review"
+      },
+      {
+        "command": "ompReview.openDiff",
+        "title": "Open Diff",
+        "category": "Human Review"
+      },
+      {
+        "command": "ompReview.addFileComment",
+        "title": "Add File Comment",
+        "icon": "$(comment)",
+        "category": "Human Review"
+      },
+      {
+        "command": "ompReview.submitReview",
+        "title": "Submit Review",
+        "icon": "$(check)",
+        "category": "Human Review"
+      },
+      {
+        "command": "ompReview.createComment",
+        "title": "Comment",
+        "enablement": "!commentIsEmpty",
+        "category": "Human Review"
+      },
+      {
+        "command": "ompReview.deleteThread",
+        "title": "Delete",
+        "icon": "$(trash)",
+        "category": "Human Review"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "ompReview.openDiff",
+          "when": "false"
+        },
+        {
+          "command": "ompReview.createComment",
+          "when": "false"
+        },
+        {
+          "command": "ompReview.deleteThread",
+          "when": "false"
+        },
+        {
+          "command": "ompReview.addFileComment",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "ompReview.refresh",
+          "when": "view == ompReviewFiles",
+          "group": "navigation@1"
+        },
+        {
+          "command": "ompReview.submitReview",
+          "when": "view == ompReviewFiles && ompReview.hasComments",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "ompReview.addFileComment",
+          "when": "view == ompReviewFiles && viewItem == ompReviewFile"
+        }
+      ],
+      "comments/commentThread/context": [
+        {
+          "command": "ompReview.createComment",
+          "group": "inline",
+          "when": "commentController == ompReview && commentThreadIsEmpty"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "ompReview.deleteThread",
+          "group": "navigation",
+          "when": "commentController == ompReview && !commentThreadIsEmpty"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Human Review",
+      "properties": {
+        "ompReview.reviewDirectory": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Absolute path, or path relative to the workspace root. Leave blank to use `<workspace root>/.omp-review`."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package",
+    "test": "tsx --test src/model/reviewMarkdown.test.ts src/git.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.28.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}
